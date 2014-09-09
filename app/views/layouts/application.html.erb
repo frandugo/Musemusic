@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+	<title>Musemusic</title>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600,700' rel='stylesheet' type='text/css'>	
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<header>
+		<div class="header">
+			<h1><a href="index.html">Mouse and Sound</a></h1>
+			<nav>
+				<%=  link_to "Letras", feed_path %>
+				<a href="melodias.html">Melodias</a>
+				<a href="artistas.html">Artistas</a>
+				<!-- <a href="login.html" class="login">Login</a> -->
+				<% if current_user %>
+				 	<%= link_to('Logout', logout_path, :class => 'login') %>
+				<% else %> 	
+					<%= link_to('Login', login_path, :class => 'login')  %>  
+				<% end %>
+
+				<% if current_user %>	
+					<%=  link_to current_user.full_name, edit_user_registration_path, :class => 'registro button pink small' %>
+				<% else %> 	
+					<%= link_to('Register', register_path, :class => 'registro button pink small')  %>
+				<% end %>	
+
+			</nav>	
+		</div>	
+	</header>
+	<!-- <section class="headerhome">
+		<div class="wrapper">
+			<div class="info">
+				<h1>Letras y Melodias de Artistas anonimos</h1>
+				<p>con mucho talento apoyalos en su Arte</p>
+				<form>
+					<input type="text" placeholder="Busca por letras, melodias, artista">
+				</form>	
+			</div>
+		</div>	
+	</section> -->
+	<section class="letter">
+		<div class="wrapper">
+			<% flash.each do |type, message| %>
+				<% if flash[:notice] %>
+					<div class="alert <% flash_class type %>">
+						<button class="close" data-dismiss="alert" href="#">x</button>
+						<%= message %>
+					</div>	
+				<% end %>
+			<% end %>
+			<!-- START -->
+			<%= yield %>
+			<!-- END  -->
+		</div>	
+	</section>	
+<footer>
+		<ul class="conditions">
+			<li><a href="politicas.html">Politicas</a></li>
+			<li><a href="contacto.html">Contacto</a></li>
+		</ul>
+		<p class="right">Todos los derechos reservados 2014</p>
+	</footer>	
+</body>
+</html>
